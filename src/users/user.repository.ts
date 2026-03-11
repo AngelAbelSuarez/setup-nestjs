@@ -7,6 +7,14 @@ export class UsersRepository {
     private users: User[] = [];
     private nextId: number = 1;
 
+    async create(createUserDto: CreateUserDto): Promise<RespondUserDto> {
+        const newUser = new User({ ...createUserDto, id: this.nextId });
+        this.users.push(newUser);
+        this.nextId++;
+        return new RespondUserDto(newUser);
+    }
+
+
     async findAll(): Promise<RespondUserDto[]> {
         const users = this.users
         return users.map(user => new RespondUserDto(user));
@@ -21,28 +29,21 @@ export class UsersRepository {
     }
 
 
-    async create(createUserDto: CreateUserDto): Promise<RespondUserDto> {
-        const newUser = new User({...createUserDto, id: this.nextId});
-        this.users.push(newUser);
-        this.nextId++;
-        return new RespondUserDto(newUser);
-    }
-
     async update(id: number, updateUserDto: UpdateUserDto): Promise<RespondUserDto> {
-        const user = await this.findById(id);
+        const user = this.users.find(u => u.id === id);
         if (!user) {
             throw new NotFoundException(`User with id ${id} not found`);
         }
         Object.assign(user, updateUserDto);
-         return new RespondUserDto(user);
+        return new RespondUserDto(user);
     }
 
     async delete(id: number): Promise<boolean> {
-        const user = await this.findById(id);
-        if (!user) {
+        const userIndex = this.users.findIndex(u => u.id === id);
+        if (userIndex === -1) {
             throw new NotFoundException(`User with id ${id} not found`);
         }
-        this.users = this.users.filter(user => user.id !== id);
+        this.users.splice(userIndex, 1);
         return true;
     }
 }
