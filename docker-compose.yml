@@ -3,15 +3,13 @@ version: '3.8'
 services:
   postgres:
     image: postgres:13.21-alpine3.20
-    container_name: postgres
+    container_name: postgresNest
     restart: always
-    env_file:
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_USER=root
-      - DB_PASSWORD=123456
-      - DB_DATABASE=postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-root}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-123456a}
+      POSTGRES_DB: ${DB_DATABASE:-postgres}
     volumes:
       - ./postgres:/var/lib/postgresql/data
     ports:
-      - '5432:5432'
+      - "${DB_PORT:-5432}:5432"

@@ -1,16 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
     @ApiProperty({ example: 1, description: 'The unique identifier of the user' })
-    @PrimaryGeneratedColumn()
-    @Column({
-        type: 'varchar',
-        nullable: false
-    })
-    @Generated("uuid")
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @ApiProperty({ example: 'John Doe', description: 'The name of the user' })
@@ -27,7 +21,6 @@ export class User {
         unique: true,
         nullable: false
     })
-    // @IsEmail()
     email: string;
 
     @ApiProperty({ example: 'strongpassword123', description: 'The password of the user' })
@@ -38,10 +31,9 @@ export class User {
     })
     password: string;
 
-    constructor(user: User) {
-        this.id = user.id;
-        this.name = user.name;
-        this.email = user.email;
-        this.password = user.password;
+    constructor(user?: Partial<User>) {
+        if (user) {
+            Object.assign(this, user);
+        }
     }
 }

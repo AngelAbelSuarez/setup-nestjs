@@ -8,10 +8,10 @@ export const databaseProvider = {
     host: configService.get<string>('DB_HOST') || 'localhost',
     port: configService.get<number>('DB_PORT') || 5432,
     username: configService.get<string>('DB_USER') || 'root',
-    password: configService.get<string>('DB_PASSWORD') || '123456',
+    password: configService.get<string>('DB_PASSWORD') || '123456a',
     database: configService.get<string>('DB_DATABASE') || 'postgres',
     autoLoadEntities: true,
-    synchronize: false,
+    synchronize: true,
   }),
   inject: [ConfigService],
 };
