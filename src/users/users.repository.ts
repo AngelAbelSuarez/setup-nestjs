@@ -11,17 +11,14 @@ export class UsersRepository {
         private userRepository: Repository<User>
     ) { }
 
-    async create(createUserDto: CreateUserDto): Promise<RespondUserDto> {
+    async create(createUserDto: CreateUserDto): Promise<User> {
         const user = this.userRepository.create(createUserDto);
-        const newUser = await this.userRepository.save(user);
-        return new RespondUserDto(newUser);
-    }      
-
-    async findByEmail(email: string): Promise<RespondUserDto | undefined> {
-        const user = await this.userRepository.findOneBy({ email });
-        return new RespondUserDto(user);
+        return this.userRepository.save(user);
     }
-
+    
+    async findByEmail(email: string): Promise<User | null> {
+        return this.userRepository.findOneBy({ email });
+    }
 
     async findAll(): Promise<RespondUserDto[]> {
         const users = await this.userRepository.find();
@@ -33,8 +30,7 @@ export class UsersRepository {
         if (!user) {
             throw new NotFoundException(`User with id ${id} not found`);
         }
-        // return new RespondUserDto(user);
-        return user;
+        return new RespondUserDto(user);
     }
 
 

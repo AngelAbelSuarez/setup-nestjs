@@ -6,8 +6,8 @@ export const databaseProvider = {
   useFactory: (configService: ConfigService): TypeOrmModuleOptions => ({
     type: 'postgres',
     host: configService.get<string>('DB_HOST') || 'localhost',
-    port: configService.get<number>('DB_PORT') || 5432,
-    username: configService.get<string>('DB_USER') || 'root',
+    port: configService.get<number>('DB_PORT') || 5437,
+    username: configService.get<string>('DB_USER') || 'angel',
     password: configService.get<string>('DB_PASSWORD') || '123456a',
     database: configService.get<string>('DB_DATABASE') || 'postgres',
     autoLoadEntities: true,

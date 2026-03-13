@@ -6,21 +6,22 @@ import { CreateUserDto, UpdateUserDto, RespondUserDto } from './dto';
 export class UsersService {
   constructor(private usersRepository: UsersRepository) { }
 
-  async create(createUserDto: CreateUserDto): Promise<RespondUserDto> {
-    try {
+async create(createUserDto: CreateUserDto): Promise<RespondUserDto> {
 
-      const email = await this.usersRepository.findByEmail(createUserDto.email);
+  const email = await this.usersRepository.findByEmail(createUserDto.email);
 
-      if (email) {
-        throw new ConflictException('Email already exists');
-      }
-
-      return await this.usersRepository.create(createUserDto);
-    } catch (error) {
-      throw error;
-    }
-
+  if (email) {
+    throw new ConflictException('Email already exists');
   }
+
+  const user = await this.usersRepository.create(createUserDto);
+
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+  };
+}
 
   async findAll(): Promise<RespondUserDto[]> {
     return await this.usersRepository.findAll();

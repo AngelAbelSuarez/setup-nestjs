@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody, ApiConflictResponse, ApiInternalServerErrorResponse } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { CreateUserDto, UpdateUserDto, RespondUserDto } from './dto';
 
@@ -12,6 +12,26 @@ export class UsersController {
   @ApiOperation({ summary: 'Create user' })
   @ApiBody({ type: CreateUserDto })
   @ApiResponse({ status: 201, description: 'The user has been successfully created.', type: RespondUserDto })
+  @ApiConflictResponse({
+    description: 'Email already exists',
+    schema: {
+      example: {
+        message: 'Email already exists',
+        error: 'Conflict',
+        statusCode: 409,
+      },
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error',
+    schema: {
+      example: {
+        message: 'Internal server error',
+        error: 'Internal Server Error',
+        statusCode: 500,
+      },
+    },
+  })
   async create(@Body() createUserDto: CreateUserDto): Promise<RespondUserDto> {
     return this.usersService.create(createUserDto);
   }

@@ -2,14 +2,14 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:13.21-alpine3.20
+    image: postgres:16.13-alpine3.23
     container_name: postgresNest
     restart: always
     environment:
-      POSTGRES_USER: ${DB_USER:-root}
+      POSTGRES_USER: ${DB_USER:-angel}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-123456a}
       POSTGRES_DB: ${DB_DATABASE:-postgres}
     volumes:
       - ./postgres:/var/lib/postgresql/data
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - "${DB_PORT:-5437}:5432"
