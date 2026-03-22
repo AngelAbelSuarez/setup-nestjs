@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { User } from "./entities/user.entity";
+import { User } from "@/users/entities/user.entity";
 import { CreateUserDto, UpdateUserDto, RespondUserDto } from './dto';
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { ClientsDragonBallZ } from "src/ClientsDragonBallZ/clients.service";
+import { ClientsDragonBallZ } from "@/ClientsDragonBallZ/clients.service";
 import { CharacterDto } from "src/ClientsDragonBallZ/dto/character.dto";
 import { DeleteResult } from 'typeorm';
 
@@ -42,7 +42,8 @@ export class UsersRepository {
 
 
     async update(id: string, updateUserDto: UpdateUserDto): Promise<RespondUserDto | null> {
-        return await this.userRepository.findOneBy({ id });      
+        await this.userRepository.update(id, updateUserDto);
+        return await this.userRepository.findOneBy({ id });
     }
 
     async delete(id: string): Promise<DeleteResult> {

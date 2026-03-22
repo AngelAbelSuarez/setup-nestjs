@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from '../entities/user.entity';
-import { CharacterDto } from '../../ClientsDragonBallZ/dto/character.dto'
+import { User } from '@/users/entities/user.entity';
+import { CharacterDto } from '@/ClientsDragonBallZ/dto/character.dto'
 
 export class RespondUserDragonBallZDto {
     @ApiProperty({ example: '4a488157-4198-4489-9c89-859d76ccb060', description: 'The unique identifier of the user' })

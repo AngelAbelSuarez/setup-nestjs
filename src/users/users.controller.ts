@@ -7,7 +7,7 @@ import {
   Param,
   Delete
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody, ApiConflictResponse, ApiInternalServerErrorResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody, ApiConflictResponse, ApiInternalServerErrorResponse, ApiBadRequestResponse } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { CreateUserDto, UpdateUserDto, RespondUserDto, RespondUserDragonBallZDto } from './dto';
 
@@ -20,6 +20,24 @@ export class UsersController {
   @ApiOperation({ summary: 'Create user' })
   @ApiBody({ type: CreateUserDto })
   @ApiResponse({ status: 201, description: 'The user has been successfully created.', type: RespondUserDto })
+  @ApiBadRequestResponse({
+    description: 'Bad request',
+    schema: {
+      example: {
+        message: [
+          "name must be a string",
+          "name should not be empty",
+          "email must be an email",
+          "email must be a string",
+          "email should not be empty",
+          "password must be a string",
+          "password should not be empty"
+        ],
+        error: 'Bad Request',
+        statusCode: 400,
+      },
+    },
+  })
   @ApiConflictResponse({
     description: 'Email already exists',
     schema: {
