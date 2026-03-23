@@ -21,10 +21,9 @@ export async function initTestApp(): Promise<TestAppContext> {
 
   // Override database configuration for tests
   const app = moduleFixture.createNestApplication();
-  console.log(app)
   // Get the DataSource before initializing the app
   const dataSource = moduleFixture.get<DataSource>(DataSource);
-  console.log(dataSource)
+
   // Drop and recreate the database schema
   await dataSource.dropDatabase();
   await dataSource.synchronize();
@@ -36,10 +35,9 @@ export async function initTestApp(): Promise<TestAppContext> {
       transform: true,
     })
   );
-  console.log(app)
+
   // Initialize the app
   await app.init();
-  console.log(app)
   // Get repository
   const usersRepository = dataSource.getRepository(User);
 

@@ -36,7 +36,7 @@ export class ClientsDragonBallZ {
             }
             return data;
         } catch {
-            console.log('Error character not found');
+            // console.log('Error character not found');
             return null;
         }
     }

@@ -8,10 +8,7 @@ import { ClientsDragonBallZModule } from './ClientsDragonBallZ/clients.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: [
-        `.env.${process.env.NODE_ENV}`,
-        '.env',
-      ],
+      envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
     }),
     DatabaseModule,
     UsersModule,

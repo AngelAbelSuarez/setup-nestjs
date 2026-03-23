@@ -19,7 +19,6 @@ describe('UsersController (e2e)', () => {
         // Extract what we need from the context
         app = testContext.app;
         usersRepository = testContext.usersRepository;
-
     });
 
     afterAll(async () => {
