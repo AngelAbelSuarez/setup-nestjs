@@ -46,6 +46,10 @@ export class UsersRepository {
         return await this.userRepository.findOneBy({ id });
     }
 
+    async findAllEmail(criteria: any): Promise<RespondUserDto[]> {
+        return this.userRepository.find({ where: criteria });
+    }
+
     async delete(id: string): Promise<DeleteResult> {
         return await this.userRepository.delete(id)
     }
