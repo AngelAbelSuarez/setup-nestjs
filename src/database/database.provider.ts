@@ -16,7 +16,7 @@ export const databaseProvider = {
       password: configService.get<string>('POSTGRES_DB_PASSWORD') || 'postgres',
       database: configService.get<string>('POSTGRES_DB_DATABASE') || 'usersdb',
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: configService.get<boolean>('POSTGRES_DB_SYNC') || true,
     };
 
     if (isTest) {
@@ -29,7 +29,7 @@ export const databaseProvider = {
         password: configService.get<string>('POSTGRES_DB_PASSWORD') || 'postgres',
         database: configService.get<string>('POSTGRES_DB_DATABASE') || 'usersdb_test',
         autoLoadEntities: true,
-        synchronize: true,
+        synchronize: configService.get<boolean>('POSTGRES_DB_SYNC') || true,
       };
     }
 

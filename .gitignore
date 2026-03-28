@@ -4,6 +4,8 @@
 /node_modules
 /build
 /postgres
+/postgres_data
+/postgres_test_data
 
 # Logs
 logs

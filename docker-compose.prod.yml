@@ -12,12 +12,12 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_NAME=usersdb
-      - POSTGRES_SYNC=true
+      - POSTGRES_DB_HOST=db
+      - POSTGRES_DB_PORT=5432
+      - POSTGRES_DB_USER=postgres
+      - POSTGRES_DB_PASSWORD=postgres
+      - POSTGRES_DB_NAME=usersdb
+      - POSTGRES_DB_SYNC=true
       - POKEMON_API_URL=https://dragonball-api.com/api/characters
     restart: unless-stopped
 
@@ -30,7 +30,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: usersdb
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
 
 volumes:

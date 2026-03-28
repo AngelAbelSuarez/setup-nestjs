@@ -6,9 +6,9 @@ services:
     container_name: postgresNest
     restart: always
     environment:
-      POSTGRES_USER: angel
-      POSTGRES_PASSWORD: 123456a
-      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: usersdb
     volumes:
       - ./postgres:/var/lib/postgresql/data
     ports:
