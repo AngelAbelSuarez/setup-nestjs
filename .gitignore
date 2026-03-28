@@ -6,6 +6,7 @@
 /postgres
 /postgres_data
 /postgres_test_data
+/circleci
 
 # Logs
 logs
