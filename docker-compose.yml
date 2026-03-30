@@ -3,7 +3,7 @@ version: '3.8'
 services:
   postgres:
     image: postgres:16.13-alpine3.23
-    container_name: postgresNest
+    container_name: postgres_local
     restart: always
     environment:
       POSTGRES_USER: postgres

@@ -1,0 +1,47 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.0.2
+  coveralls: coveralls/coveralls@2.2.5
+
+jobs:
+  build_and_test: # this can be any name you choose
+    docker:
+      - image: cimg/node:22.14.0
+        environment:
+          POSTGRES_DB_HOST=0.0.0.0
+          POSTGRES_DB_PORT=5432
+          POSTGRES_DB_USER=postgres
+          POSTGRES_DB_PASSWORD=postgres
+          POSTGRES_DB_NAME=usersdb_test
+          POSTGRES_DB_SYNC=true
+          DRAGONBALL_API_URL='https://dragonball-api.com/api/characters'
+          COVERALLS_REPO_TOKEN=dHYyDqC6S2EXTfF7ssDh02ZSjRjUWh2zA
+      # Service container image
+      - image: cimg/postgres:16.11
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: usersdb_test
+    executor: node/default # use the default executor defined within the orb
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          name: Install dependencies         
+      - run:
+          command: COVERALLS_REPO_TOKEN=dHYyDqC6S2EXTfF7ssDh02ZSjRjUWh2zA npm run test:cov
+          name: Run tests
+      - run:
+          command: npm run build
+          name: Build app
+      - persist_to_workspace:
+          root: ~/project
+          paths: .
+      - coveralls/upload:
+          parallel: true
+          flag_name: Test 1
+          verbose: true
+workflows:
+  build_test_deploy: # this can be any name you choose
+    jobs:
+      - build_and_test

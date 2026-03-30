@@ -7,6 +7,7 @@
 /postgres_data
 /postgres_test_data
 /circleci
+**/coverage
 
 # Logs
 logs

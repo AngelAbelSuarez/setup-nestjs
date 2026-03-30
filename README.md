@@ -2,7 +2,9 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Badges
+
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/8Vocs9Wi1dzq3hdj7Xm8N6/M3fRRpk1JCp1gnCsQwMbJC/tree/circleci-project-setup.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/8Vocs9Wi1dzq3hdj7Xm8N6/M3fRRpk1JCp1gnCsQwMbJC/tree/circleci-project-setup)
 
 ## Features
 

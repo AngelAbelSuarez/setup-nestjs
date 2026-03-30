@@ -6,11 +6,11 @@ services:
       sh -c "npm run test:e2e"
     depends_on:
       - db
-    ports:
-      - 3000:3000
     build:
       context: .
       dockerfile: Dockerfile
+    ports:
+      - 3000:3000
     environment:
       - POSTGRES_DB_HOST=db
       - POSTGRES_DB_PORT=5432

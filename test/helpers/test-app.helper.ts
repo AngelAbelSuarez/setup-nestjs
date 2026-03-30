@@ -18,13 +18,12 @@ export async function initTestApp(): Promise<TestAppContext> {
   const moduleFixture: TestingModule = await Test.createTestingModule({
     imports: [AppModule],
   }).compile();
-
+  
   // Override database configuration for tests
   const app = moduleFixture.createNestApplication();
   // Get the DataSource before initializing the app
   const dataSource = moduleFixture.get<DataSource>(DataSource);
-
-  // Drop and recreate the database schema
+   // Drop and recreate the database schema
   await dataSource.dropDatabase();
   await dataSource.synchronize();
 
