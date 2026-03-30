@@ -1,60 +1,46 @@
-# This config was automatically generated from your source code
-# Stacks detected: deps:node:.,package_manager:yarn:,test:jest:
 version: 2.1
 orbs:
-  node: circleci/node@5
+  node: circleci/node@5.0.2
+  coveralls: coveralls/coveralls@2.2.5
+
 jobs:
-  test-node:
-    # Install node dependencies and run tests
-    executor: node/default
-    environment:
-      JEST_JUNIT_OUTPUT_DIR: ./test-results/
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-      - run:
-          command: yarn add jest-junit --ignore-workspace-root-check
-      - run:
-          name: Run tests
-          command: yarn run test --ci --runInBand --reporters=default --reporters=jest-junit
-      - store_test_results:
-          path: ./test-results/
-  build-node:
-    # Build node project
-    executor: node/default
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-      - run:
-          command: yarn run build
-      - run:
-          name: Create the ~/artifacts directory if it doesn't exist
-          command: mkdir -p ~/artifacts
-      # Copy output to artifacts dir
-      - run:
-          name: Copy artifacts
-          command: cp -R build dist public .output .next .docusaurus ~/artifacts 2>/dev/null || true
-      - store_artifacts:
-          path: ~/artifacts
-          destination: node-build
-  deploy:
-    # This is an example deploy job, not actually used by the workflow
+  build_and_test:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:22.14.0
+        environment:
+          POSTGRES_DB_HOST: 0.0.0.0
+          POSTGRES_DB_PORT: 5432
+          POSTGRES_DB_USER: postgres
+          POSTGRES_DB_PASSWORD: postgres
+          POSTGRES_DB_NAME: usersdb_test
+          POSTGRES_DB_SYNC: true
+          DRAGONBALL_API_URL: 'https://dragonball-api.com/api/characters'
+          COVERALLS_REPO_TOKEN: dHYyDqC6S2EXTfF7ssDh02ZSjRjUWh2zA
+      - image: cimg/postgres:16.11
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: usersdb_test
+    executor: node/default
     steps:
-      # Replace this with steps to deploy to users
+      - checkout
       - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
+          command: npm install
+          name: Install dependencies
+      - run:
+          command: COVERALLS_REPO_TOKEN=dHYyDqC6S2EXTfF7ssDh02ZSjRjUWh2zA npm run test:cov
+          name: Run tests
+      - run:
+          command: npm run build
+          name: Build app
+      - persist_to_workspace:
+          root: ~/project
+          paths: .
+      - coveralls/upload:
+          parallel: true
+          flag_name: Test 1
+          verbose: true
 workflows:
-  build-and-test:
+  build_test_deploy:
     jobs:
-      - test-node
-      - build-node:
-          requires:
-            - test-node
-    # - deploy:
-    #     requires:
-    #       - build-node
+      - build_and_test
