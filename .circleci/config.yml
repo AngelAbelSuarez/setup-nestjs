@@ -1,9 +1,10 @@
-version: 2.1
+# version: 2.1
 orbs:
   node: circleci/node@5.0.2
+  # Remove the coveralls orb
 
 jobs:
-  build_and_test: # this can be any name you choose
+  build_and_test:
     docker:
       - image: cimg/node:22.14.0
         environment:
@@ -14,34 +15,35 @@ jobs:
           POSTGRES_DB_NAME=usersdb_test
           POSTGRES_DB_SYNC=true
           DRAGONBALL_API_URL='https://dragonball-api.com/api/characters'
-      # Service container image
       - image: cimg/postgres:16.11
         environment:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: usersdb_test
-    executor: node/default # use the default executor defined within the orb
     steps:
       - checkout
       - run:
+          name: Install dependencies
           command: npm install
-          name: Install dependencies         
       - run:
-          command: COVERALLS_REPO_TOKEN=gLskLgZ58OYgHYPem2MLSnox65zICVe8t npm run test:cov
-          name: Run tests
+          name: Run tests with coverage
+          command: npm run test:cov
+          environment:
+            COVERALLS_REPO_TOKEN: gLskLgZ58OYgHYPem2MLSnox65zICVe8t
       - run:
-          command: npm run build
+          name: Upload to Coveralls
+          command: |
+            npm install coveralls --save-dev
+            cat ./coverage/lcov.info | ./node_modules/.bin/coveralls --verbose
+          environment:
+            COVERALLS_REPO_TOKEN: gLskLgZ58OYgHYPem2MLSnox65zICVe8t
+      - run:
           name: Build app
+          command: npm run build
       - persist_to_workspace:
           root: ~/project
           paths: .
-      - coveralls/upload:
-          parallel: true
-          flag_name: Test 1
-          verbose: true
-
 
 workflows:
-  build_test_deploy: # this can be any name you choose
+  build_test_deploy:
     jobs:
       - build_and_test
