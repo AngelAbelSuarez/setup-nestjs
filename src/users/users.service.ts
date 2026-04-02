@@ -1,13 +1,21 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UsersRepository } from './users.repository';
-import { CreateUserDto, UpdateUserDto, RespondUserDto, RespondUserDragonBallZDto } from './dto';
+import {
+  CreateUserDto,
+  UpdateUserDto,
+  RespondUserDto,
+  RespondUserDragonBallZDto,
+} from './dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private usersRepository: UsersRepository) { }
+  constructor(private usersRepository: UsersRepository) {}
 
   async create(createUserDto: CreateUserDto): Promise<RespondUserDto> {
-
     const email = await this.usersRepository.findByEmail(createUserDto.email);
 
     if (email) {
@@ -28,7 +36,9 @@ export class UsersService {
     return await this.usersRepository.findAll();
   }
 
-  async findByIdwIThDragonBallZ(id: string): Promise<RespondUserDragonBallZDto | undefined> {
+  async findByIdwIThDragonBallZ(
+    id: string,
+  ): Promise<RespondUserDragonBallZDto | undefined> {
     const user = await this.usersRepository.findById(id);
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found`);
@@ -37,7 +47,9 @@ export class UsersService {
     let dragonBallZCharacters;
 
     if (user.dragonBallZIds && user.dragonBallZIds.length > 0) {
-      dragonBallZCharacters = await this.usersRepository.findCharacters(user.dragonBallZIds);
+      dragonBallZCharacters = await this.usersRepository.findCharacters(
+        user.dragonBallZIds,
+      );
     }
 
     const userWithCharacters = {
@@ -48,7 +60,6 @@ export class UsersService {
     };
 
     return userWithCharacters;
-
   }
 
   async findById(id: string): Promise<RespondUserDto | undefined> {
@@ -56,14 +67,18 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found`);
     }
-    return user
+    return user;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<RespondUserDto> {
-
+  async update(
+    id: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<RespondUserDto> {
     await this.findById(id);
 
-    const email = await this.usersRepository.findAllEmail({ email: updateUserDto.email });
+    const email = await this.usersRepository.findAllEmail({
+      email: updateUserDto.email,
+    });
 
     if (email.length === 1 && email[0].id !== id) {
       throw new ConflictException('Email already exists');
@@ -74,7 +89,7 @@ export class UsersService {
       throw new NotFoundException(`User with id ${id} not found`);
     }
 
-    return userUpdated
+    return userUpdated;
   }
 
   async delete(id: string): Promise<boolean> {
@@ -88,7 +103,6 @@ export class UsersService {
       throw new NotFoundException(`User with id ${id} not found`);
     }
 
-    return true
-
+    return true;
   }
 }

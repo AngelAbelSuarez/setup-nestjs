@@ -4,7 +4,7 @@
 
 ## Badges
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/8Vocs9Wi1dzq3hdj7Xm8N6/M3fRRpk1JCp1gnCsQwMbJC/tree/circleci-project-setup.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/8Vocs9Wi1dzq3hdj7Xm8N6/M3fRRpk1JCp1gnCsQwMbJC/tree/circleci-project-setup)
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/8Vocs9Wi1dzq3hdj7Xm8N6/N9MMdbw5wW2iDNfKkgAq7C/tree/circleci-project-setup.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/8Vocs9Wi1dzq3hdj7Xm8N6/N9MMdbw5wW2iDNfKkgAq7C/tree/circleci-project-setup)
 
 ## Features
 
@@ -36,7 +36,7 @@ $ ./up_dev.sh
 # permissions
 $ chmode 711 ./up_test.sh
 
-# start app
+# start test
 $ ./up_test.sh
 ```
 

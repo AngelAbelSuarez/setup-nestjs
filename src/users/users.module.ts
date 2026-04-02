@@ -12,4 +12,4 @@ import { ClientsDragonBallZModule } from '../ClientsDragonBallZ/clients.module';
   providers: [UsersService, UsersRepository],
   exports: [UsersService],
 })
-export class UsersModule { }
+export class UsersModule {}
