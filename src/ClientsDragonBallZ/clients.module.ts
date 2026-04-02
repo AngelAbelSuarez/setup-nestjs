@@ -5,4 +5,4 @@ import { ClientsDragonBallZ } from './clients.service';
   providers: [ClientsDragonBallZ],
   exports: [ClientsDragonBallZ],
 })
-export class ClientsDragonBallZModule { }
+export class ClientsDragonBallZModule {}

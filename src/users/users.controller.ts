@@ -5,33 +5,51 @@ import {
   Body,
   Patch,
   Param,
-  Delete
+  Delete,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody, ApiConflictResponse, ApiInternalServerErrorResponse, ApiBadRequestResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiParam,
+  ApiBody,
+  ApiConflictResponse,
+  ApiInternalServerErrorResponse,
+  ApiBadRequestResponse,
+} from '@nestjs/swagger';
 import { UsersService } from './users.service';
-import { CreateUserDto, UpdateUserDto, RespondUserDto, RespondUserDragonBallZDto } from './dto';
+import {
+  CreateUserDto,
+  UpdateUserDto,
+  RespondUserDto,
+  RespondUserDragonBallZDto,
+} from './dto';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create user' })
   @ApiBody({ type: CreateUserDto })
-  @ApiResponse({ status: 201, description: 'The user has been successfully created.', type: RespondUserDto })
+  @ApiResponse({
+    status: 201,
+    description: 'The user has been successfully created.',
+    type: RespondUserDto,
+  })
   @ApiBadRequestResponse({
     description: 'Bad request',
     schema: {
       example: {
         message: [
-          "name must be a string",
-          "name should not be empty",
-          "email must be an email",
-          "email must be a string",
-          "email should not be empty",
-          "password must be a string",
-          "password should not be empty"
+          'name must be a string',
+          'name should not be empty',
+          'email must be an email',
+          'email must be a string',
+          'email should not be empty',
+          'password must be a string',
+          'password should not be empty',
         ],
         error: 'Bad Request',
         statusCode: 400,
@@ -62,13 +80,17 @@ export class UsersController {
     const userData = {
       ...createUserDto,
       dragonBallZIds: createUserDto.dragonBallZIds || [],
-    }
+    };
     return this.usersService.create(userData);
   }
 
   @Get()
   @ApiOperation({ summary: 'Get all users' })
-  @ApiResponse({ status: 200, description: 'Return all users.', type: [RespondUserDto] })
+  @ApiResponse({
+    status: 200,
+    description: 'Return all users.',
+    type: [RespondUserDto],
+  })
   @ApiInternalServerErrorResponse({
     description: 'Internal server error',
     schema: {
@@ -86,18 +108,25 @@ export class UsersController {
   @Get(':id')
   @ApiOperation({ summary: 'Get user by id' })
   @ApiParam({ name: 'id', description: 'User id' })
-  @ApiResponse({ status: 200, description: 'Return the user.', type: RespondUserDragonBallZDto })
   @ApiResponse({
-    status: 404, description: 'User not found.', schema: {
-      example: {
-        message: "User with id 17a6b856-03d8-44a5-a87f-cf76fcc67f45 not found",
-        error: "Not Found",
-        statusCode: 404
-      }
-    }
+    status: 200,
+    description: 'Return the user.',
+    type: RespondUserDragonBallZDto,
   })
-
-  async findById(@Param('id') id: string): Promise<RespondUserDragonBallZDto | undefined> {
+  @ApiResponse({
+    status: 404,
+    description: 'User not found.',
+    schema: {
+      example: {
+        message: 'User with id 17a6b856-03d8-44a5-a87f-cf76fcc67f45 not found',
+        error: 'Not Found',
+        statusCode: 404,
+      },
+    },
+  })
+  async findById(
+    @Param('id') id: string,
+  ): Promise<RespondUserDragonBallZDto | undefined> {
     return this.usersService.findByIdwIThDragonBallZ(id);
   }
 
@@ -105,15 +134,21 @@ export class UsersController {
   @ApiOperation({ summary: 'Update user' })
   @ApiParam({ name: 'id', description: 'User id' })
   @ApiBody({ type: UpdateUserDto })
-  @ApiResponse({ status: 200, description: 'The user has been successfully updated.', type: RespondUserDto })
   @ApiResponse({
-    status: 404, description: 'User not found.', schema: {
+    status: 200,
+    description: 'The user has been successfully updated.',
+    type: RespondUserDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'User not found.',
+    schema: {
       example: {
-        message: "User with id 17a6b856-03d8-44a5-a87f-cf76fcc67f45 not found",
-        error: "Not Found",
-        statusCode: 404
-      }
-    }
+        message: 'User with id 17a6b856-03d8-44a5-a87f-cf76fcc67f45 not found',
+        error: 'Not Found',
+        statusCode: 404,
+      },
+    },
   })
   @ApiConflictResponse({
     description: 'Email already exists',
@@ -135,8 +170,10 @@ export class UsersController {
       },
     },
   })
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<RespondUserDto> {
-
+  async update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<RespondUserDto> {
     return this.usersService.update(id, updateUserDto);
   }
 
@@ -145,13 +182,15 @@ export class UsersController {
   @ApiParam({ name: 'id', description: 'User id' })
   @ApiResponse({ status: 200, description: 'OK', type: Boolean })
   @ApiResponse({
-    status: 404, description: 'User not found.', schema: {
+    status: 404,
+    description: 'User not found.',
+    schema: {
       example: {
-        message: "User with id 17a6b856-03d8-44a5-a87f-cf76fcc67f45 not found",
-        error: "Not Found",
-        statusCode: 404
-      }
-    }
+        message: 'User with id 17a6b856-03d8-44a5-a87f-cf76fcc67f45 not found',
+        error: 'Not Found',
+        statusCode: 404,
+      },
+    },
   })
   @ApiInternalServerErrorResponse({
     description: 'Internal server error',

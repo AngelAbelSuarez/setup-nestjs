@@ -4,8 +4,6 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { ClientsDragonBallZModule } from './ClientsDragonBallZ/clients.module';
 
-
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -14,9 +12,9 @@ import { ClientsDragonBallZModule } from './ClientsDragonBallZ/clients.module';
     }),
     DatabaseModule,
     UsersModule,
-    ClientsDragonBallZModule
+    ClientsDragonBallZModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}
