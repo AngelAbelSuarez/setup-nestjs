@@ -1,9 +1,14 @@
-version: '3.8'
+version: "3.8"
 
 services:
   api:
     command: >
-      sh -c "npm run start:prod"
+      sh -c "
+        echo 'Esperando 20 segundos...' &&
+        sleep 20 &&
+        echo 'PostgreSQL debería estar listo, iniciando la aplicación...' &&
+      npm run start:prod
+      "
     depends_on:
       - db
     ports:

@@ -27,30 +27,28 @@ describe('UsersController (e2e)', () => {
   beforeAll(async () => {
     // Inicializar la aplicación de prueba
     testContext = await initTestApp();
-
-    // Extract what we need from the context
     app = testContext.app;
-
     usersRepository = testContext.usersRepository;
 
-    axiosGetService = jest
-      .spyOn(axios, 'get')
-      .mockImplementation((url: string) => {
-        if (url.includes('dragonball-api.com')) {
-          const id = getDragonBallZIdFromUrl(url);
-          if (id !== null) {
-            const data = mockDragonBallZData.find(
-              (dragonBall) => dragonBall.id === id,
-            );
-            return Promise.resolve({ data: data });
-          }
+    axiosGetService = jest.spyOn(axios, 'get');
+    axiosGetService.mockImplementation((url: string) => {
+      if (url.includes('dragonball-api.com')) {
+        const id = getDragonBallZIdFromUrl(url);
+        if (id !== null) {
+          const data = mockDragonBallZData.find(
+            (dragonBall) => dragonBall.id === id,
+          );
+          return Promise.resolve({ data: data });
         }
-        return Promise.reject(new Error(`No mock configured for URL: ${url}`));
-      });
+      }
+      return Promise.reject(new Error(`No mock configured for URL: ${url}`));
+    });
   });
 
   afterAll(async () => {
-    axiosGetService.mockRestore();
+    if (axiosGetService) {
+      axiosGetService.mockClear();
+    }
     // Limpiar después de todos los tests
     await closeTestApp(testContext);
   });
@@ -58,7 +56,9 @@ describe('UsersController (e2e)', () => {
   beforeEach(async () => {
     //Restaurar spy después de cada test
     await resetTestApp(testContext);
-    axiosGetService.mockClear();
+    if (axiosGetService) {
+      axiosGetService.mockClear();
+    }
   });
 
   describe('POST /users', () => {

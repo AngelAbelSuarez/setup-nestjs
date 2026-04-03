@@ -7,7 +7,7 @@ services:
         echo 'Esperando 20 segundos...' &&
         sleep 20 &&
         echo 'PostgreSQL debería estar listo, ejecutando pruebas...' &&
-        npm run test:e2e
+        npm run test:cov
       "
     depends_on:
       - db
