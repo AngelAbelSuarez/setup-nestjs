@@ -11,8 +11,12 @@ export const AppDataSource = new DataSource({
   username: process.env.POSTGRES_DB_USER || 'postgres',
   password: process.env.POSTGRES_DB_PASSWORD || 'postgres',
   database: process.env.POSTGRES_DB_DATABASE || 'usersdb',
-  synchronize: process.env.POSTGRES_DB_SYNC ? process.env.POSTGRES_DB_SYNC === 'true' : true,
+  synchronize: process.env.DATABASE_SYNC === 'true',
   entities: [join(__dirname, '../**/*.entity{.ts,.js}')],
-  migrations: [join(__dirname, 'migrations/*{.ts,.js}')],
+  migrations: [
+    join(__dirname, '../../migrations/*.{ts,js}'),
+    join(__dirname, '../../seed-migrations/*.{ts,js}'),
+  ],
+
   migrationsTableName: 'migrations_table',
 });

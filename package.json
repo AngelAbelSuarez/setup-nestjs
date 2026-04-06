@@ -20,12 +20,12 @@
     "test:cov:ci": "npm run test:cov && coveralls < coverage/lcov.info",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json --runInBand",
-    "typeorm": "dotenv -e .env -- ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "typeorm": "typeorm-ts-node-commonjs -d ./src/database/data-source.ts",
     "migration:create": "npm run typeorm -- migration:create",
-    "migration:generate": "npm run typeorm -- -d src/database/data-source.ts migration:generate",
-    "migration:run": "npm run typeorm -- -d src/database/data-source.ts migration:run",
-    "migration:show": "npm run typeorm -- -d src/database/data-source.ts migration:show",
-    "migration:revert": "npm run typeorm -- -d src/database/data-source.ts migration:revert"
+    "migration:generate": "npm run typeorm -- migration:generate",
+    "migration:run": "npm run typeorm -- migration:run",
+    "migration:revert": "npm run typeorm -- migration:revert",
+    "migration:show": "npm run typeorm -- migration:show"
   },
   "dependencies": {
     "@nestjs/axios": "4.0.1",
