@@ -6,8 +6,9 @@ services:
       sh -c "
         echo 'Esperando 20 segundos...' &&
         sleep 20 &&
-        echo 'PostgreSQL debería estar listo, iniciando la aplicación...' &&
-      npm run start:prod
+        echo 'PostgreSQL debería estar listo, iniciando migraciones y la aplicación...' &&
+        npm run migration:run &&
+        npm run start:prod         
       "
     depends_on:
       - db

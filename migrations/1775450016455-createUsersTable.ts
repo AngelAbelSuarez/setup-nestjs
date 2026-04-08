@@ -4,20 +4,21 @@ export class CreateUsersTable1775450016455 implements MigrationInterface {
     name = 'CreateUsersTable1775450016455'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        // Ensure uuid generation function (gen_random_uuid is available in PG 13+)
         await queryRunner.query(`
-            CREATE TABLE "user" (
-            "id" uuid NOT NULL DEFAULT uuid_generate_v4(), 
-            "name" character varying(100) NOT NULL, 
-            "email" character varying NOT NULL, 
-            "password" character varying(100) NOT NULL, 
-            "dragonBallZIds" integer array NOT NULL DEFAULT '{}', 
-            CONSTRAINT "UQ_e12875dfb3b1d92d7d7c5377e22" UNIQUE ("email"), 
-            CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))
+            CREATE TABLE IF NOT EXISTS "user" (
+                "id" uuid NOT NULL DEFAULT gen_random_uuid(),
+                "name" character varying(100) NOT NULL,
+                "email" character varying NOT NULL,
+                "password" character varying(100) NOT NULL,
+                "dragonBallZIds" integer array NOT NULL DEFAULT '{}',
+                CONSTRAINT "UQ_e12875dfb3b1d92d7d7c5377e22" UNIQUE ("email"),
+                CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id")
+            )
         `);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DROP TABLE "user"`);
+        await queryRunner.query(`DROP TABLE IF EXISTS "user"`);
     }
-
 }
