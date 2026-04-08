@@ -2,6 +2,10 @@
 
 ## Description
 
+This project is a scalable backend application built with NestJS, developed as a solution for a backend challenge. It provides a RESTful API to manage users and integrates with an external Dragon Ball API to enrich user profiles with character data based on their matching Dragon Ball IDs.
+
+Built with Clean Architecture principles in mind, the application ensures high maintainability and testability. It leverages TypeORM and PostgreSQL for robust data persistence, and is fully containerized with Docker to provide a seamless development and deployment experience. Additionally, the project includes automated CI/CD pipelines via CircleCI and comprehensive E2E testing to guarantee code reliability.
+
 ## Badges
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/circleci/8Vocs9Wi1dzq3hdj7Xm8N6/N9MMdbw5wW2iDNfKkgAq7C/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/8Vocs9Wi1dzq3hdj7Xm8N6/N9MMdbw5wW2iDNfKkgAq7C/tree/main)
