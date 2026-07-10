@@ -30,7 +30,7 @@ Built with Clean Architecture principles in mind, the application ensures high m
 
 ```bash
 # permissions
-$ chmode 711 ./up_dev.sh
+$ chmod 711 ./up_dev.sh
 
 # start app
 $ ./up_dev.sh
@@ -40,7 +40,7 @@ $ ./up_dev.sh
 
 ```bash
 # permissions
-$ chmode 711 ./up_test.sh
+$ chmod 711 ./up_test.sh
 
 # start test
 $ ./up_test.sh
